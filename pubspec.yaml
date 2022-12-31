@@ -1,0 +1,29 @@
+name: clean
+description: A new Flutter project.
+
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.2 <3.0.0"
+
+dependencies:
+  connectivity: ^0.4.3+7
+  cupertino_icons: ^1.0.2
+  dartz: ^0.8.6
+  equatable: ^0.4.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^0.21.0
+  get_it: ^2.0.1
+  http: ^0.12.0+2
+  mockito: ^5.3.2
+  shared_preferences: ^0.5.3+4
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
