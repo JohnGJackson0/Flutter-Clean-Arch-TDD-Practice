@@ -6,7 +6,7 @@ import 'dart:ffi';
 
 import 'package:clean/core/error/exceptions.dart';
 import 'package:clean/core/error/failures.dart';
-import 'package:clean/core/platform/network_info.dart';
+import 'package:clean/core/network/network_info.dart';
 import 'package:clean/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
 import 'package:clean/features/number_trivia/data/datasources/number_trivia_remote_datasource.dart';
 import 'package:clean/features/number_trivia/data/models/number_trivia_model.dart';

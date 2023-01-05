@@ -8,7 +8,7 @@ environment:
   sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
-  connectivity: ^0.4.3+7
+  data_connection_checker: ^0.3.4
   cupertino_icons: ^1.0.2
   dartz: ^0.8.6
   equatable: ^0.4.0
