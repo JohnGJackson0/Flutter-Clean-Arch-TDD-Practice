@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:clean/core/error/failures.dart';
 import 'package:clean/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:equatable/equatable.dart';
 
@@ -54,7 +55,19 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       // since there is a nested Higher Order Function
       yield* inputEither.fold((failure) async* {
         yield Error(message: INVALID_INPUT_FAILURE_MESSAGE);
-      }, (integer) => throw UnimplementedError());
+      }, (integer) async* {
+        yield Loading();
+        final failureOrTrivia =
+            await getConcreteNumberTrivia(Params(number: integer));
+        // if return type is either, use FOLD, it
+        // makes it so you have to handle error side
+        yield failureOrTrivia.fold(
+            (failure) => Error(
+                message: failure is ServerFailure
+                    ? SERVER_FAILURE_MESSAGE
+                    : CACHE_FAILURE_MESSAGE),
+            (trivia) => Loaded(trivia: trivia));
+      });
     }
   }
 }
