@@ -62,12 +62,22 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         // if return type is either, use FOLD, it
         // makes it so you have to handle error side
         yield failureOrTrivia.fold(
-            (failure) => Error(
-                message: failure is ServerFailure
-                    ? SERVER_FAILURE_MESSAGE
-                    : CACHE_FAILURE_MESSAGE),
+            (failure) => Error(message: _mapFailureToMessage(failure)),
             (trivia) => Loaded(trivia: trivia));
       });
+    }
+  }
+
+  // should use extension method but not currently
+  // implemented in flutter
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return SERVER_FAILURE_MESSAGE;
+      case CacheFailure:
+        return CACHE_FAILURE_MESSAGE;
+      default:
+        return 'Unexpected Error';
     }
   }
 }
