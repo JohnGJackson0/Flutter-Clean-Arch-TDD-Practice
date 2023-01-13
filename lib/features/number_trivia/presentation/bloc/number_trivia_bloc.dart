@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:clean/core/error/failures.dart';
 import 'package:clean/core/usecase/usecase.dart';
 import 'package:clean/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/util/input_converter.dart';
@@ -60,19 +61,23 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         yield Loading();
         final failureOrTrivia =
             await getConcreteNumberTrivia(Params(number: integer));
-        // if return type is either, use FOLD, it
-        // makes it so you have to handle error side
-        yield failureOrTrivia.fold(
-            (failure) => Error(message: _mapFailureToMessage(failure)),
-            (trivia) => Loaded(trivia: trivia));
+
+        yield* _handleTriviaLoadedOrError(failureOrTrivia);
       });
     } else if (event is GetTriviaForRandomNumber) {
       yield Loading();
       final failureOrTrivia = await getRandomNumberTrivia(NoParams());
-      yield failureOrTrivia.fold(
-          (failure) => Error(message: _mapFailureToMessage(failure)),
-          (trivia) => Loaded(trivia: trivia));
+      yield* _handleTriviaLoadedOrError(failureOrTrivia);
     }
+  }
+
+  Stream<NumberTriviaState> _handleTriviaLoadedOrError(
+      Either<Failure, NumberTrivia> failureOrTrivia) async* {
+    // if return type is either, use FOLD, it
+    // makes it so you have to handle error side
+    yield failureOrTrivia.fold(
+        (failure) => Error(message: _mapFailureToMessage(failure)),
+        (trivia) => Loaded(trivia: trivia));
   }
 
   // should use extension method but not currently
