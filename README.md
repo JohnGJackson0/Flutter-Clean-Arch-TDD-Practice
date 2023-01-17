@@ -1,16 +1,11 @@
-# clean
+# Clean Architecture in flutter
 
-A new Flutter project.
+## Understaing DI and DIAP
 
-## Getting Started
+If the creation of an object is tied to implementation logic, then relying solely on the abstract type and defining the logic for its creation does not fully decouple the implementation from that code.
 
-This project is a starting point for a Flutter application.
+Therefore, it should not be responsible for creating the objects themselves. Instead, it should have a passed in pre-constructed object. Violating this principle would be any object that creates another object within the code.
 
-A few resources to get you started if this is your first Flutter project:
+Dependency injection requires configuration details to be provided by the construction code itself, which can be challenging when clear default options are not available.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The challenge is well worth the effort though because it completes the software boundary on code where the implementation may change often. It helps define how code will work for testing without dealing with implementation logic that the test does not care about. Lastly, it makes the code base easier to reason about by seperating the app into maintainable chucks of logic that loosly depends on each other.
