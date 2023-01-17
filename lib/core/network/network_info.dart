@@ -48,6 +48,13 @@ import 'package:data_connection_checker/data_connection_checker.dart';
   production.   
 */
 
+/*
+  Mocking in tests and using abstract classes for the types
+  requires the use of dependency injection in production,
+  where the responsibility of object creation is passed to 
+  somewhere else 
+*/
+
 abstract class NetworkInfo {
   Future<bool> get isConnected;
 }

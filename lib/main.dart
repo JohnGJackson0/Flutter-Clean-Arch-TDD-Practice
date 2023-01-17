@@ -1,6 +1,9 @@
+import 'package:clean/injection_container.dart' as di;
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  // register needed objects before UI
+  await di.init();
   runApp(const MyApp());
 }
 
